@@ -1,0 +1,35 @@
+<%- include("partials/header") %>
+
+<div class="container">
+	<header class="jumbotron">
+		<div class="container">
+			<h1>Welcome To The Best Of Sydney</h1>
+			<p>Check out our hand-picked recommendations</p>
+			<p>
+			 <a class="btn btn-success btn-lg" href="/locations/new">Add new location</a>
+			</p>
+		</div>
+	</header>
+
+	<div class="row">
+  	<div class="col-lg-12">
+  		<h3>Our Most Popular Locations</h3>
+  	</div>
+	</div>
+
+  <div class="row text-center" style="display:flex; flex-wrap: wrap;">
+		<%locations.forEach(function(locations) { %>
+			<div class="col-md-3 col-sm-6">
+	      <div class="thumbnail">
+	      	<img src="<%= locations.image %>" alt="">
+					<div class="caption">
+						<h4><%= locations.name %></h4>
+					</div>
+	      </div>
+			</div>
+
+
+		<% }); %>
+  </div> <!-- Row -->
+</div>  <!-- container -->
+<%- include("partials/footer") %>
