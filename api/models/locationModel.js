@@ -19,6 +19,6 @@ const locationSchema = new Schema({
 			required: "Please add the location"
 		}
 	}, {collection: 'location'});
-);
+
 
 module.exports = mongoose.model('Location', locationSchema)

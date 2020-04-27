@@ -1,10 +1,22 @@
 const express = require("express");
 const app = express();
-const bodyPaser = require("body-parser");
+const bodyParser = require("body-parser");
 
+const mongoose = require('mongoose');
+// const Location = mongoose.model('Location');
 
+global.Location = require('./api/models/locationModel');
 
-app.use(bodyPaser.urlencoded({extended: true}));
+mongoose.Promise = global.Promise;
+mongoose.set('useFindAndModify', false);
+
+mongoose.connect(
+	`mongodb+srv://Josh:chicken123@cluster0-rdwjs.mongodb.net/test?retryWrites=true&w=majority`,
+	{ useNewUrlParser: true}
+)
+
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 app.set("view engine", "ejs");
 
 
@@ -18,21 +30,31 @@ let locations = [
 ]
 
 app.get("/", function(req, res){
-	res.render("landing");
+		Location.find({}, (err, locations) => {
+		if (err) res.send(err);
+		res.render("locations", {locations:locations})
+	})
 });
 
-app.get("/locations", function(req, res){
+// mongodb+srv://Josh:chicken123@cluster0-rdwjs.mongodb.net/test?retryWrites=true&w=majority
 
-	res.render("locations", {locations:locations})
-});
+// app.get("/locations", function(req, res){
+//
+// 	res.render("locations", {locations:locations})
+// });
 
 app.post("/locations",function(req, res){
+	let location = req.body.location;
+	let desc = req.body.desc;
 	let name = req.body.name;
 	let image = req.body.image;
-	let newLocation = {name: name, image: image};
-	locations.push(newLocation);
-  // res.send("You hit the post");
-	res.redirect("/locations");
+	console.log(req.body);
+  const newLocation = new Location({ location, name, desc, image });
+	newLocation.save((err, location) => {
+		if (err) res.send(err);
+		res.end();
+  });
+	// res.redirect("/locations");
 });
 
 app.get("/locations/new", function(req, res){
