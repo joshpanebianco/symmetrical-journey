@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const bodyPaser = require("body-parser");
-// const mongoose = require("mongoose");
+const mongoose = require("mongoose");
 
 mongoose.connect("mongodb://localhost/travel_tips");
 app.use(bodyPaser.urlencoded({extended: true}));
