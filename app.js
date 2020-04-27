@@ -1,32 +1,12 @@
 const express = require("express");
 const app = express();
 const bodyPaser = require("body-parser");
-const mongoose = require("mongoose");
 
-mongoose.connect("mongodb://localhost/travel_tips");
+
+
 app.use(bodyPaser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
-// Schema Setup
-const locationSchema = new mongoose.Schema({
-	 name: String,
-	 image: String
-});
-
-const Location =  mongoose.model("Campground", locationSchema);
-
-Location.create(
-	{
-		name: "Bondi Beach",
-		image: "https://images.unsplash.com/photo-1544698206-7af5843dcce4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60"
-	}, function(err, location){
-		if(err){
-			console.log(err);
-		} else {
-			console.log("Newly created location");
-			console.log(location);
-		}
-	});
 
 let locations = [
 	 {name: "Bondi Beach", image: "https://images.unsplash.com/photo-1544698206-7af5843dcce4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60"},
