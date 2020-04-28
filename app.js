@@ -11,7 +11,7 @@ mongoose.Promise = global.Promise;
 mongoose.set('useFindAndModify', false);
 
 mongoose.connect(
-	`mongodb+srv://Josh:chicken123@cluster0-rdwjs.mongodb.net/test?retryWrites=true&w=majority`,
+	`mongodb+srv://Josh:${process.env.MONGOPW}@cluster0-rdwjs.mongodb.net/test?retryWrites=true&w=majority`,
 	{ useNewUrlParser: true}
 )
 
@@ -48,17 +48,25 @@ app.post("/locations",function(req, res){
 	let desc = req.body.desc;
 	let name = req.body.name;
 	let image = req.body.image;
-	console.log(req.body);
   const newLocation = new Location({ location, name, desc, image });
 	newLocation.save((err, location) => {
 		if (err) res.send(err);
-		res.end();
+		res.redirect("/locations/" + location._id);
   });
 	// res.redirect("/locations");
 });
 
 app.get("/locations/new", function(req, res){
 	 res.render("new.ejs");
+});
+
+app.get("/locations/:id", function(req, res){
+   Location.findById(req.params.id, function(err, location){
+		 if (err) {
+		 	res.send(err);
+		 }
+		 res.render("show.ejs", { location:location });
+	 });
 });
 
 // Port details
