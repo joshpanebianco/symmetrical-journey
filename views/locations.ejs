@@ -20,12 +20,14 @@
   <div class="row text-center" style="display:flex; flex-wrap: wrap;">
 		<%locations.forEach(function(locations) { %>
 			<div class="col-md-3 col-sm-6">
-	      <div class="thumbnail">
-	      	<img src="<%= locations.image %>" alt="">
-					<div class="caption">
-						<h4><%= locations.name %></h4>
-					</div>
-	      </div>
+				<a href="/locations/<%= locations._id %>">
+					<div class="thumbnail">
+		      	<img src="<%= locations.image %>" alt="">
+						<div class="caption">
+							<h4><%= locations.name %></h4>
+						</div>
+		      </div>
+				</a>
 			</div>
 
 

@@ -1,2 +1,14 @@
-<h1>Show page</h1>
-<%= location.name %>
+<%- include("partials/header") %>
+
+<div class="container">
+	<h1><%= location.name %></h1>
+	<img src="<%= location.image %>" alt=""/>
+	<h4><%= location.location %></h4>
+	<p><%= location.desc %></p>
+
+	<a href="/locations/<%= location._id %>/delete">Delete</a>
+</div>
+
+
+
+<%- include("partials/footer") %>

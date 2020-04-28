@@ -60,6 +60,12 @@ app.get("/locations/new", function(req, res){
 	 res.render("new.ejs");
 });
 
+app.get("/locations/:id/delete", function(req, res){
+	Location.deleteOne({_id:req.params.id}, function(err){
+		res.redirect("/");
+	});
+});
+
 app.get("/locations/:id", function(req, res){
    Location.findById(req.params.id, function(err, location){
 		 if (err) {
