@@ -6,7 +6,9 @@
 	<h4><%= location.location %></h4>
 	<p><%= location.desc %></p>
 
+	<% if(currentUser){ %>
 	<a href="/locations/<%= location._id %>/delete">Delete</a>
+	<% } %>
 </div>
 
 

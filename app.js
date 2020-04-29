@@ -96,7 +96,7 @@ app.get("/locations/:id", function(req, res){
 
 // Show register
 app.get("/register", function(req, res){
-	res.render("register");
+	res.render("register", { currentUser: req.user });
 });
 
 // handle sign up logic
