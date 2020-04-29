@@ -1,6 +1,9 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+const passport = require("passport");
+const localStrategy = require("passport-local");
+const User = require("./api/models/user");
 
 const mongoose = require('mongoose');
 // const Location = mongoose.model('Location');
@@ -9,6 +12,19 @@ global.Location = require('./api/models/locationModel');
 
 mongoose.Promise = global.Promise;
 mongoose.set('useFindAndModify', false);
+
+// Passport Config
+app.use(require("express-session")({
+	secret: "Starwars is better than StarTrek",
+	resave: false,
+	saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new localStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 
 mongoose.connect(
 	`mongodb+srv://Josh:${process.env.MONGOPW}@cluster0-rdwjs.mongodb.net/test?retryWrites=true&w=majority`,
@@ -30,9 +46,10 @@ let locations = [
 ]
 
 app.get("/", function(req, res){
+	  console.log(req.user);
 		Location.find({}, (err, locations) => {
 		if (err) res.send(err);
-		res.render("locations", {locations:locations})
+		res.render("locations", {locations:locations, currentUser: req.user});
 	})
 });
 
@@ -57,7 +74,7 @@ app.post("/locations",function(req, res){
 });
 
 app.get("/locations/new", function(req, res){
-	 res.render("new.ejs");
+	 res.render("new.ejs", { currentUser: req.user });
 });
 
 app.get("/locations/:id/delete", function(req, res){
@@ -71,9 +88,57 @@ app.get("/locations/:id", function(req, res){
 		 if (err) {
 		 	res.send(err);
 		 }
-		 res.render("show.ejs", { location:location });
+		 res.render("show.ejs", { location:location, currentUser: req.user });
 	 });
 });
+
+// AUTH ROUTES
+
+// Show register
+app.get("/register", function(req, res){
+	res.render("register");
+});
+
+// handle sign up logic
+app.post("/register", function(req, res){
+	let newUser = new User({username: req.body.username});
+	User.register(newUser, req.body.password, function(err, user){
+		if(err){
+			console.log(err);
+			return res.render("register");
+		}
+		passport.authenticate("local")(req, res, function(){
+			res.redirect("/");
+		});
+	});
+});
+
+//show login form
+app.get("/login", function(req, res){
+  res.render("login", { currentUser: req.user });
+});
+
+// login logic
+app.post("/login", passport.authenticate("local",
+    {
+			sucessRedirect: "/",
+			failureRedirect: "/login"
+		}), function(req, res){
+			res.redirect("/");
+});
+
+// logic route
+app.get("/logout", function(req, res){
+	req.logout();
+	res.redirect("/");
+});
+
+function isLoggedIn(req, res, next){
+	if(req.isAuthenticated()){
+		return next();
+	}
+	res.redirect("/login");
+}
 
 // Port details
 const PORT = process.env.PORT || 3000;
