@@ -69,6 +69,10 @@ img.home-img {
     border-color: #03A9F4;
 }
 
+.show-img {
+	width: 100%;
+}
+
 /* @media(max-width: 770px) {
 	/* .home-img {
 		width: 80vw;
