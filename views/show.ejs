@@ -1,10 +1,29 @@
 <%- include("partials/header") %>
 
 <div class="container">
-	<h1><%= location.name %></h1>
-	<img src="<%= location.image %>" alt=""/>
-	<h4><%= location.location %></h4>
-	<p><%= location.desc %></p>
+	<div class="row">
+			<div class="col-md-3">
+				<p class="lead">Best Of Sydney</p>
+				<div class="list-group">
+					<li class="list-group-item active">Info 1</li>
+					<li class="list-group-item">Info 2</li>
+					<li class="list-group-item">Info 3</li>
+				</div>
+			</div>
+			<div class="col-md-9">
+				<div class="thumbnail">
+					<img class="img-responsive" src="<%= location.image %>" alt=""/>
+					<div class="caption-full">
+						<h4 class="pull-right"><%= location.location %></h4>
+						<h4><a href="#"><%= location.name %></a></h4>
+						<p><%= location.desc %></p>
+					</div>
+				</div>
+				<% if(currentUser){ %>
+				<a href="/locations/<%= location._id %>/delete">Delete</a>
+				<% } %>
+			</div>
+	</div>
 
 	<% if(currentUser){ %>
 	<a href="/locations/<%= location._id %>/delete">Delete</a>
