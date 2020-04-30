@@ -9,3 +9,24 @@
 .thumbnail .caption-full {
 	padding: 9px;
 }
+
+.home-tn {
+	/* height: 232px; */
+}
+
+img.home-img {
+  width: 100%;
+	height: 200px;
+	object-fit: cover;
+}
+
+/* @media(max-width: 770px) {
+	/* .home-img {
+		width: 80vw;
+		height: 250px;
+	}
+
+	.home-tn {
+		margin: inherit auto;
+	} */
+/* }  */

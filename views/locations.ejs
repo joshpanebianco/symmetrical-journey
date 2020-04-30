@@ -23,8 +23,8 @@
 		<%locations.forEach(function(locations) { %>
 			<div class="col-md-3 col-sm-6">
 				<a href="/locations/<%= locations._id %>">
-					<div class="thumbnail">
-		      	<img src="<%= locations.image %>" alt="">
+					<div class="thumbnail home-tn">
+              <img class="home-img" src="<%= locations.image %>" alt="">
 						<div class="caption">
 							<h4><%= locations.name %></h4>
 						</div>
