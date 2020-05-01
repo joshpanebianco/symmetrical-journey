@@ -1,6 +1,6 @@
 # Project 3 - GA SEI-36 - Travel Recommendations Site
 
-For my final project at the Software Engineering Immersive program at General Assembly was a travel recommendation site focused on people visiting Sydney for the first time.
+My final project at the Software Engineering Immersive program at General Assembly was a travel recommendation site focused on people visiting Sydney for the first time.
 
 Link to the live demo: https://fierce-spire-62709.herokuapp.com/
 
